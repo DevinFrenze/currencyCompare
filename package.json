@@ -1,0 +1,11 @@
+{
+  "name": "lumosity_currency",
+  "version": "1.0.0",
+  "description": "display conversion rates for lumosity assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Devin Frenze",
+  "license": "ISC"
+}
