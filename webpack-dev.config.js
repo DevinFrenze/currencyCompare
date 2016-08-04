@@ -1,7 +1,7 @@
 var SRC_DIR = `${__dirname}/src`
 
 module.exports = {
-  entry: `${SRC_DIR}/entry.js`,
+  entry: ['babel-polyfill', `${SRC_DIR}/entry.js`],
   output: {
     path: __dirname,
     filename: 'bundle.js',
@@ -14,7 +14,8 @@ module.exports = {
         include: SRC_DIR,
         loader: 'babel',
         query: {
-          presets: [ 'es2015', 'react' ]
+          presets: [ 'es2015', 'react' ],
+          plugins: [ 'transform-async-to-generator' ]
         }
       },
       {
