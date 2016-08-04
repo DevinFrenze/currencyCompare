@@ -11,6 +11,7 @@
   "author": "Devin Frenze",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^6.4.0",
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-async-to-generator": "^6.8.0",
@@ -21,6 +22,8 @@
     "css-loader": "^0.23.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "postcss-loader": "^0.9.1",
+    "precss": "^1.4.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"

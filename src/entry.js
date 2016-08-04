@@ -5,25 +5,31 @@ import 'whatwg-fetch'
 
 class App extends React.Component {
   componentWillMount() {
-    this.state = { base: 'EUR' }
+    this.state = { base: 'USD' }
     this.fetchRates()
   }
 
   async fetchRates() {
-    const response = await fetch('http://api.fixer.io/latest')
+    const { base } = this.state
+    const response = await fetch(`http://api.fixer.io/latest?base=${base}`)
 
     if (response.status < 400) {
       const rates = await response.json()
-      this.setState({ rates })
+      this.setState(Object.assign( this.state, rates ))
     }
   }
 
   render () {
-    const { rates } = this.state
+
+    const { base, rates } = this.state
     return (
       <div>
-        <div>REACT IS HERE</div>
-        {rates && rates.base}
+        <div>REACT IS THERE</div>
+        <div>{base} = 1</div>
+        <div>{rates ?
+          rates.EUR && ('EUR = ' + rates.EUR) :
+          'Loading'
+        }</div>
       </div>
     )
   }
