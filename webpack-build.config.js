@@ -32,7 +32,7 @@ module.exports = {
     return [precss, autoprefixer];
   },
   resolve: {
-    modulesDirectories: [ 'src', 'web_modules', 'node_modules' ],
-    extensions: [ '', '.js', '.less' ],
+    modulesDirectories: [ 'src', 'web_modules', 'node_modules', 'node_modules/gsap/src/minified' ],
+    extensions: [ '', '.js', '.less', '.min.js' ],
   }
 }

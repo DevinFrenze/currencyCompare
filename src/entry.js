@@ -1,26 +1,33 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {findRatio} from 'lib/index'
+import {BaseSection, CompareSection} from 'components'
 import 'styles/main'
 import 'whatwg-fetch'
 
 class App extends React.Component {
   componentWillMount() {
+    const currentBase = 'USD'
+    const currentCompare = 'EUR'
     this.state = {
-      currentBase: 'USD',
-      currentCompare: 'HUF',
-      ratios: {},
-      rates: {}
+      currentBase,
+      currentCompare,
+      ratios: { [currentBase]: {} },
+      rates: { [currentBase]: {} }
     }
     this.fetchRates()
   }
 
   componentDidUpdate() {
-    const { currentCompare, ratios, rates } = this.state
-    if (!ratios[currentCompare] && rates) {
+    const { currentBase, currentCompare, ratios, rates } = this.state
+    if (!ratios[currentBase][currentCompare] && rates[currentBase][currentCompare]) {
       setTimeout( () => {
-        const ratio = findRatio(1, rates[currentCompare])
-        this.setState({ ratios: Object.assign( {}, this.state.ratios, { [currentCompare]: ratio }) })
+        const ratio = findRatio(1, rates[currentBase][currentCompare])
+        this.setState({
+          ratios: Object.assign( {}, this.state.ratios, {
+            [currentBase]: Object.assign( {}, this.state.ratios[currentBase], { [currentCompare]: ratio })
+          })
+        })
       }, 0)
     }
   }
@@ -31,34 +38,55 @@ class App extends React.Component {
 
     if (response.status < 400) {
       const results = await response.json()
+      let options = Object.keys(results.rates)
+      options.push(currentBase)
       this.setState({
-        options: Object.keys(results.rates).sort(),
-        rates: results.rates
+        options: options.sort(),
+        rates: Object.assign({}, this.state.rates, {
+          [currentBase]: Object.assign({}, results.rates, { [currentBase]: 1 })
+        })
       })
     }
   }
 
-  changeCompareCurrency (indexShift) {
-    const { options, currentCompare, rates } = this.state
-    let newIndex = options.indexOf(currentCompare) + indexShift
+  newValue(current, indexShift) {
+    const { options } = this.state
+    let newIndex = options.indexOf(current) + indexShift
     if (newIndex >= options.length) newIndex -= options.length
     else if (newIndex < 0) newIndex += options.length
+    return options[newIndex]
+  }
 
-    const newCompare = options[newIndex]
+  changeBaseCurrency (indexShift) {
+    // the results for this function is bad for currencies that are really weak
+    // because the runtime of the algorithm that finds the simplest ratio is big
+    const { currentBase, ratios, rates } = this.state
+    const newBase = this.newValue(currentBase, indexShift)
+    this.setState({
+      currentBase: newBase,
+      ratios: Object.assign({ [newBase]: {} }, ratios),
+      rates: Object.assign({ [newBase]: {} }, rates)
+    }, this.fetchRates.bind(this))
+  }
+
+  changeCompareCurrency (indexShift) {
+    const { currentCompare } = this.state
+    const newCompare = this.newValue(currentCompare, indexShift) 
     this.setState({ currentCompare: newCompare })
   }
 
   render () {
     const { currentBase, currentCompare, ratios, options } = this.state
-    const ratio = ratios[currentCompare]
-    console.log('render ' + currentCompare)
+    const ratio = ratios[currentBase][currentCompare]
     return (
-      <div>
-        <div>REACT IS THERE</div>
-        <div>{currentBase} = {ratio ? ratio[0] : '?'}</div>
-        <div>{currentCompare} = {ratio ? ratio[1] : '?'}</div>
-        <div onClick={() => this.changeCompareCurrency(-1)}>back</div>
-        <div onClick={() => this.changeCompareCurrency(1)}>forward</div>
+      <div className='sections-container'>
+        <BaseSection currency={currentBase} number={ratio ? ratio[0] : '?'}/>
+        <CompareSection
+          currency={currentCompare}
+          number={ratio ? ratio[1] : '?'}
+          options={options}
+          changeOption={this.changeCompareCurrency.bind(this)}
+        />
       </div>
     )
   }
