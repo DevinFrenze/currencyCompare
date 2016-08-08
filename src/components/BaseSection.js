@@ -1,16 +1,48 @@
 import React, { PropTypes } from 'react'
-import {currencyNames} from 'lib'
+import {currencyNames, totalArea} from 'lib/constants'
+import Circle from './Circle'
 
 class BaseSection extends React.Component {
   render () {
     const { currency, number } = this.props
     return (
       <div className='section'>
-        <div className='currency-abbreviation'>
-          {currency}
+        <div className='header'>
+          <div className='currency-abbreviation'>
+            {currency}
+          </div>
+          <div className='currency-name'>{currencyNames[currency]}</div>
         </div>
-        <div className='currency-name'>{currencyNames[currency]}</div>
         <div className='currency-number'>{number}</div>
+        {number !== '?' && this.renderCircles()}
+      </div>
+    )
+  }
+
+  renderCircles () {
+    const { number } = this.props
+    const circles = []
+    let group = 0, lastGroupBoundary = 0, groupBoundary = 1
+
+    for (let i = 0; i < number; i++) {
+      if (i >= groupBoundary) {
+        group++
+        lastGroupBoundary = groupBoundary
+        groupBoundary += group * 6
+      }
+      circles.push(
+        <Circle
+          key={i} 
+          groupIndex={i - lastGroupBoundary}
+          index={i}
+          group={group}
+          diameter={Math.sqrt(totalArea / number)}
+        />
+      )
+    }
+    return (
+      <div className='circle-container'>
+        {circles}
       </div>
     )
   }

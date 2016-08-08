@@ -1,14 +1,10 @@
-/*
-import 'whatwg-fetch'
-
-export async function getRate() {
-  const response = await fetch('http://api.fixer.io/latest')
-
-  return await response.json()
-}
-*/
+import _ from 'lodash'
+const primeFactorizations = {}
 
 function primeFactorization(num) {
+  if (primeFactorizations[num])
+    return _.clone(primeFactorizations[num])
+
   const results = { 1: num }
   let n = num
   for (var i = 2; i < Math.sqrt(num); i++) {
@@ -19,6 +15,7 @@ function primeFactorization(num) {
     }
   }
   results[n] = 1
+  primeFactorizations[num] = _.clone(results)
   return results
 }
 
@@ -67,6 +64,9 @@ function getSimplestRatio(ratios) {
 }
 
 export function findRatio(num1, num2) {
+  console.log(num2)
+  if (num2 > 100) return [ 1, Math.floor(num2) ]
+
   const ratios = []
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
@@ -74,39 +74,4 @@ export function findRatio(num1, num2) {
     }
   }
   return getSimplestRatio(ratios)
-}
-
-export const currencyNames = {
-  AUD: 'Australian Dollar',
-  BGN: 'Bulgarian Lev',
-  BRL: 'Brazilian Real',
-  CAD: 'Canadian Dollar',
-  CHF: 'Swiss Franc',
-  CNY: 'Chinese Yuan',
-  CZK: 'Czech Republic Koruna',
-  DKK: 'Danish Krone',
-  EUR: 'Euro',
-  GBP: 'British Pound',
-  HKD: 'Hong Kong Dollar',
-  HRK: 'Croatian Kuna',
-  HUF: 'Hungarian Forint',
-  IDR: 'Indonesian Rupiah',
-  ILS: 'Israeli New Sheqel',
-  INR: 'Indian Rupee',
-  JPY: 'Japanese Yen',
-  KRW: 'South Korean Won',
-  MXN: 'Mexican Peso',
-  MYR: 'Malaysian Ringgit',
-  NOK: 'Norwegian Krone',
-  NZD: 'New Zealand Dollar',
-  PHP: 'Philippine Peso',
-  PLN: 'Polish Zloty',
-  RON: 'Romanian Leu',
-  RUB: 'Russian Ruble',
-  SEK: 'Swedish Krona',
-  SGD: 'Singapore Dollar',
-  THB: 'Thai Baht',
-  TRY: 'Turkish Lira',
-  USD: 'United States Dollar',
-  ZAR: 'South African Rand'
 }

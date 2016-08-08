@@ -3,7 +3,20 @@ import {render} from 'react-dom'
 import {findRatio} from 'lib/index'
 import {BaseSection, CompareSection} from 'components'
 import 'styles/main'
+import {currencyNames} from 'lib/constants'
 import 'whatwg-fetch'
+
+/*
+ * TODO
+ *
+ * position render sections better
+ * animate circles entering and leaving
+ * add slight gradients to edges of circles
+ * format the font of the headers
+ * animate buttons
+ * add link to github
+ *
+ */
 
 class App extends React.Component {
   componentWillMount() {
@@ -23,6 +36,7 @@ class App extends React.Component {
     if (!ratios[currentBase][currentCompare] && rates[currentBase][currentCompare]) {
       setTimeout( () => {
         const ratio = findRatio(1, rates[currentBase][currentCompare])
+        console.log('ratio ' + ratio)
         this.setState({
           ratios: Object.assign( {}, this.state.ratios, {
             [currentBase]: Object.assign( {}, this.state.ratios[currentBase], { [currentCompare]: ratio })
@@ -38,10 +52,8 @@ class App extends React.Component {
 
     if (response.status < 400) {
       const results = await response.json()
-      let options = Object.keys(results.rates)
-      options.push(currentBase)
       this.setState({
-        options: options.sort(),
+        options: Object.keys(currencyNames).sort(),
         rates: Object.assign({}, this.state.rates, {
           [currentBase]: Object.assign({}, results.rates, { [currentBase]: 1 })
         })
