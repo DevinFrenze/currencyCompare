@@ -1,4 +1,4 @@
-### Currency Comparison USD v EURO
+### Currency Comparison
 
 ## TODO
  - animate buttons
