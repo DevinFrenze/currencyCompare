@@ -1,5 +1,3 @@
-export const totalArea = 200000
-
 export const currencyNames = {
   AUD: 'Australian Dollar',
   BGN: 'Bulgarian Lev',
@@ -16,9 +14,9 @@ export const currencyNames = {
   HUF: 'Hungarian Forint',
   // IDR: 'Indonesian Rupiah',
   ILS: 'Israeli New Sheqel',
-  INR: 'Indian Rupee',
-  JPY: 'Japanese Yen',
-  KRW: 'South Korean Won',
+  // INR: 'Indian Rupee',
+  // JPY: 'Japanese Yen',
+  // KRW: 'South Korean Won',
   MXN: 'Mexican Peso',
   MYR: 'Malaysian Ringgit',
   NOK: 'Norwegian Krone',
@@ -26,7 +24,7 @@ export const currencyNames = {
   PHP: 'Philippine Peso',
   PLN: 'Polish Zloty',
   RON: 'Romanian Leu',
-  RUB: 'Russian Ruble',
+  // RUB: 'Russian Ruble',
   SEK: 'Swedish Krona',
   SGD: 'Singapore Dollar',
   THB: 'Thai Baht',

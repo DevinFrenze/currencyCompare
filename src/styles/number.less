@@ -1,0 +1,13 @@
+@import 'colors';
+@import 'mixins';
+
+.currency-number {
+  .section-spanner;
+  z-index: 1;
+  font-size: 64px;
+
+  .super-shadow(@red);
+  &.m--flip {
+    .super-shadow(@blue);
+  }
+}

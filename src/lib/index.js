@@ -64,7 +64,6 @@ function getSimplestRatio(ratios) {
 }
 
 export function findRatio(num1, num2) {
-  console.log(num2)
   if (num2 > 100) return [ 1, Math.floor(num2) ]
 
   const ratios = []

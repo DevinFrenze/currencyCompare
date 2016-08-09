@@ -1,9 +1,20 @@
-@header-height: 100px;
+@import 'colors';
+@import 'mixins';
 
 body {
   font-family: Helvetica;
-  color: gray;
+  color: white;
   letter-spacing: 1px;
+  margin: 0;
+  overflow: hidden;
+  background: @yellow;
+}
+
+a {
+  color: white;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .sections-container {
@@ -11,49 +22,29 @@ body {
   justify-content: space-around;
 }
 
+.title-bar {
+  position: fixed;
+  height: 200px;
+  width: 100%;
+  bottom: 0;
+  // background: @gray;
+  // box-shadow: 0px 0px 1px 2px #000;
+  z-index: 1;
+}
+
 .section {
   width: 50%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
-.header {
-  height: @header-height;
-}
-
-.currency-abbreviation {
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-}
-
-.currency-name {
-  font-size: 16px;
-}
-
-.currency-number {
-  position: absolute;
-  color: red;
-  font-size: 80px;
+.circle-container-container {
+  .section-spanner;
 }
 
 .circle-container {
   position: relative;  
-  display: inline-block;
-  height: 2px;
-  width: 100%;
-  background-color: blue;
-  top: ~"calc((100vh - @{header-height}) / 2)";
-  left: 25vw;
-}
-
-.circle {
-  position: absolute;
-  color: white;
-  background-color: black;
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

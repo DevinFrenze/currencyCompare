@@ -1,7 +1,7 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {findRatio} from 'lib/index'
-import {BaseSection, CompareSection} from 'components'
+import {Equals, Info, Section} from 'components'
 import 'styles/main'
 import {currencyNames} from 'lib/constants'
 import 'whatwg-fetch'
@@ -9,34 +9,39 @@ import 'whatwg-fetch'
 /*
  * TODO
  *
- * position render sections better
- * animate circles entering and leaving
- * add slight gradients to edges of circles
- * format the font of the headers
  * animate buttons
  * add link to github
+ * center or deal with number alignment & renderers
  *
  */
 
+function getTotalArea() {
+  return Math.min(window.innerWidth * 100, window.innerHeight * 200)
+}
+
 class App extends React.Component {
-  componentWillMount() {
+  componentWillMount () {
     const currentBase = 'USD'
     const currentCompare = 'EUR'
     this.state = {
       currentBase,
       currentCompare,
       ratios: { [currentBase]: {} },
-      rates: { [currentBase]: {} }
+      rates: { [currentBase]: {} },
+      totalArea: getTotalArea(),
     }
     this.fetchRates()
   }
 
-  componentDidUpdate() {
+  componentDidMount () {
+    this.interval = setInterval(() => this.setState({ totalArea: getTotalArea() }), 1000)
+  }
+
+  componentDidUpdate () {
     const { currentBase, currentCompare, ratios, rates } = this.state
     if (!ratios[currentBase][currentCompare] && rates[currentBase][currentCompare]) {
       setTimeout( () => {
         const ratio = findRatio(1, rates[currentBase][currentCompare])
-        console.log('ratio ' + ratio)
         this.setState({
           ratios: Object.assign( {}, this.state.ratios, {
             [currentBase]: Object.assign( {}, this.state.ratios[currentBase], { [currentCompare]: ratio })
@@ -44,6 +49,10 @@ class App extends React.Component {
         })
       }, 0)
     }
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.interval)
   }
 
   async fetchRates() {
@@ -88,16 +97,26 @@ class App extends React.Component {
   }
 
   render () {
-    const { currentBase, currentCompare, ratios, options } = this.state
+    const { currentBase, currentCompare, ratios, totalArea, options } = this.state
     const ratio = ratios[currentBase][currentCompare]
     return (
       <div className='sections-container'>
-        <BaseSection currency={currentBase} number={ratio ? ratio[0] : '?'}/>
-        <CompareSection
+        <Info />
+        <Equals />
+        <Section
+          currency={currentBase}
+          totalArea={totalArea}
+          number={ratio ? ratio[0] : '?'}
+          options={options}
+          changeCurrency={this.changeBaseCurrency.bind(this)}
+        />
+        <Section
           currency={currentCompare}
+          totalArea={totalArea}
           number={ratio ? ratio[1] : '?'}
           options={options}
-          changeOption={this.changeCompareCurrency.bind(this)}
+          changeCurrency={this.changeCompareCurrency.bind(this)}
+          flip
         />
       </div>
     )

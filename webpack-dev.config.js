@@ -31,7 +31,7 @@ module.exports = {
     return [precss, autoprefixer];
   },
   resolve: {
-    modulesDirectories: [ 'src', 'web_modules', 'node_modules', 'node_modules/gsap/src/minified' ],
+    modulesDirectories: [ 'src', 'web_modules', 'node_modules' ],
     extensions: [ '', '.js', '.less', '.min.js' ],
   }
 }
