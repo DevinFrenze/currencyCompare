@@ -28,15 +28,18 @@
 
   .currency-button {
     transition: all 0.1s ease-in-out;
-    width: 32px;
+    @font-size: 28px;
+    width: @font-size;
+    font-size: @font-size;
     text-align: center;
-    font-size: 32px;
+
     position: relative;
+    top: -4px;
     cursor: pointer;
     transform: scale(1);
 
     &:active {
-      font-size: 28px;
+      font-size: @font-size - 4px;
     }
   }
 }
