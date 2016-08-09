@@ -1,6 +1,6 @@
 ### Currency Comparison
+Simplifies the proportion of different currencies to whole number ratios.
 
 ## TODO
  - animate buttons
- - add link to github
- - center or deal with number alignment & renderers
+ - revisit centering of components on page
