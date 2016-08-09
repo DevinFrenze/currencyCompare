@@ -4,6 +4,7 @@
   height: 150px;
   width: 100%;
   bottom: 0;
+  left: 0;
 
   position: absolute;
   display: flex;
@@ -18,24 +19,27 @@
 .currency-abbreviation {
   position: relative;
   font-size: 48px;
-  text-align: center;
-  /*
-  text-shadow:
-    -1px -1px 0 #000,  
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-  */
+  width: 100%;
+  max-width: 350px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   .currency-button {
     transition: all 0.1s ease-in-out;
+    @font-size: 28px;
+    width: @font-size;
+    font-size: @font-size;
+    text-align: center;
+
     position: relative;
-    bottom: 4px;
-    margin: 0 14px;
+    top: -4px;
     cursor: pointer;
     transform: scale(1);
 
     &:active {
-      transform: scale(0.5, 0.5);
+      font-size: @font-size - 4px;
     }
   }
 }
