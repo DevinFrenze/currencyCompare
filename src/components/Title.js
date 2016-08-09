@@ -25,19 +25,19 @@ class Title extends React.Component {
     }
     return (
       <div className='currency-abbreviation'>
-        <span
+        <div
           className='currency-button m--left'
           onClick={() => changeCurrency(-1)}
         >
-          {'<'}
-        </span>
-        {currency}
-        <span
+          &#9664;
+        </div>
+        <div>{currency}</div>
+        <div
           className='currency-button m--right'
           onClick={() => changeCurrency(1)}
         >
-          {'>'}
-        </span>
+          &#9654;
+        </div>
       </div>
     )
   }
