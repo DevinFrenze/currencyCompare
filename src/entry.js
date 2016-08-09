@@ -48,7 +48,7 @@ class App extends React.Component {
 
   async fetchRates() {
     const { currentBase, currentCompare } = this.state
-    const response = await fetch(`http://api.fixer.io/latest?base=${currentBase}`)
+    const response = await fetch(`https://api.fixer.io/latest?base=${currentBase}`)
 
     if (response.status < 400) {
       const results = await response.json()
