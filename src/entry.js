@@ -6,15 +6,6 @@ import 'styles/main'
 import {currencyNames} from 'lib/constants'
 import 'whatwg-fetch'
 
-/*
- * TODO
- *
- * animate buttons
- * add link to github
- * center or deal with number alignment & renderers
- *
- */
-
 function getTotalArea() {
   return Math.min(window.innerWidth * 100, window.innerHeight * 200)
 }
