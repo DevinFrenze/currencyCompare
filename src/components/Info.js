@@ -7,7 +7,7 @@ class Info extends React.Component {
       <div className='info-container'>
         <div className='info'>
           This currency comparer takes the proportion of two currencies and simplifies it to a whole number ratio.
-          Check out the source <a href="">here</a>.
+          Check out the source <a href='https://github.com/DevinFrenze/currencyCompare'>here</a>.
         </div>
       </div>
     )
